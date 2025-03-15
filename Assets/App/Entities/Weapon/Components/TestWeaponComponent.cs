@@ -1,32 +1,17 @@
 using System.Collections;
-using System.Collections.Specialized;
 using UnityEngine;
 
-public class TestWeaponComponent : BaseWeaponComponent
+public class TestWeaponComponent : AbstractBaseWeaponComponent
 {
-    private WeaponStore _store;
-
-    private void Awake()
+    protected override void HandleBulletCreated(BulletSchema bulletSchema)
     {
-        TryGetComponent(out _store);
+        StartCoroutine(MoveToEnemy(bulletSchema));
     }
 
-    private void Start()
+    protected override void HandleBulletCollision(Collider2D collider, BulletSchema bulletSchema)
     {
-        _store.bullets.CollectionChanged += OnChangeBullets;
-    }
-
-    private void OnChangeBullets(object sender, NotifyCollectionChangedEventArgs e)
-    {
-        if (e.NewItems != null)
-        {
-            foreach (BulletSchema bulletSchema in e.NewItems)
-            {
-                StartCoroutine(MoveToEnemy(bulletSchema));
-                bulletSchema.bulletCollisionController.OnBulletCollisionEnter +=
-                    (C => HandleBulletCollision(C, bulletSchema));
-            }
-        }
+        HitEnemy(collider.gameObject);
+        RemoveBullet(bulletSchema);
     }
 
     private IEnumerator MoveToEnemy(BulletSchema bulletSchema)
@@ -40,26 +25,8 @@ public class TestWeaponComponent : BaseWeaponComponent
         }
     }
 
-    protected override void HandleBulletCollision(Collider2D collider, BulletSchema bulletSchema)
-    {
-        if (collider.CompareTag(GameTags.Enemy))
-        {
-            EventManager<OnBulletHitEnemy>.Emit(new OnBulletHitEnemy
-            {
-                enemy = collider.gameObject,
-            }, gameObject.GetInstanceID());
-            
-            DestroyBullet(bulletSchema);
-        }
-    }
-
-    private void DestroyBullet(BulletSchema bulletSchema)
+    private void RemoveBullet(BulletSchema bulletSchema)
     {
         _store.bullets.Remove(bulletSchema);
-        
-        bulletSchema.bulletCollisionController.OnBulletCollisionEnter -=
-            (C => HandleBulletCollision(C, bulletSchema));
-        
-        Destroy(bulletSchema.bullet);
     }
 }
