@@ -1,8 +1,11 @@
 
+using AutoDeconstruct;
+
 [System.Serializable]
-public struct EnemyBaseDataSchema
+[AutoDeconstruct]
+public partial struct EnemyBaseDataSchema
 {
-    public float maxHealth;
-    public float currentHealth;
-    public float damage;
+  public float maxHealth;
+  public float currentHealth;
+  public float damage;
 }

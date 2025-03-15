@@ -1,45 +1,40 @@
-using Pure.DI;
 using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    [Dependency] public ActionManager ActionManager { private get; set; }
+  private PlayerStore _store;
+  private SpriteRenderer _spriteRenderer;
 
-    private PlayerStore _store;
-    private SpriteRenderer _spriteRenderer;
+  private void Awake()
+  {
+    gameObject.TryGetComponent(out _store);
+    gameObject.TryGetComponent(out _spriteRenderer);
+  }
 
-    private void Awake()
+  private void Update()
+  {
+    HandleMovement();
+    HandleFlip();
+  }
+
+  private void HandleMovement()
+  {
+    ActionManager.Instance.Execute(new MovePlayerAction
     {
-        Composition.Shared.BuildUp(this);
-        
-        gameObject.TryGetComponent(out _store);
-        gameObject.TryGetComponent(out _spriteRenderer);
+      store = _store,
+      transform = gameObject.transform,
+      delta = Time.deltaTime,
     }
+    );
+  }
 
-    private void Update()
+  private void HandleFlip()
+  {
+    ActionManager.Instance.Execute(new SpriteFlipAction
     {
-        HandleMovement();
-        HandleFlip();
+      spriteRenderer = _spriteRenderer,
+      movementSchema = _store.movementSchema,
     }
-
-    private void HandleMovement()
-    {
-        ActionManager.Execute(new MovePlayerAction
-            {
-                store = _store,
-                transform = gameObject.transform,
-                delta = Time.deltaTime,
-            }
-        );
-    }
-
-    private void HandleFlip()
-    {
-        ActionManager.Execute(new SpriteFlipAction
-            {
-                spriteRenderer = _spriteRenderer,
-                movementSchema = _store.movementSchema,
-            }
-        );
-    }
+    );
+  }
 }

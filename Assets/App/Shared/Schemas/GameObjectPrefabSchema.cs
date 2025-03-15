@@ -1,7 +1,9 @@
+using AutoDeconstruct;
 using UnityEngine;
 
 [System.Serializable]
-public struct GameObjectPrefabSchema
+[AutoDeconstruct]
+public partial struct GameObjectPrefabSchema
 {
-    public GameObject prefab;
+  public GameObject prefab;
 }

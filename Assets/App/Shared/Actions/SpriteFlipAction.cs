@@ -1,27 +1,29 @@
+using AutoDeconstruct;
 using UnityEngine;
 
-public struct SpriteFlipAction
+[AutoDeconstruct]
+public partial struct SpriteFlipAction
 {
-    public SpriteRenderer spriteRenderer;
-    public MovementSchema movementSchema;
+  public SpriteRenderer spriteRenderer;
+  public MovementSchema movementSchema;
 }
 
 [ActionHandler(typeof(SpriteFlipAction))]
 public class SpriteFlipActionHandler : IActionHandler<SpriteFlipAction>
 {
-    public void Execute(SpriteFlipAction action)
+  public void Execute(SpriteFlipAction action)
+  {
+    if (action.spriteRenderer)
     {
-        if (action.spriteRenderer)
-        {
-            if (action.movementSchema.direction.x < 0)
-            {
-                action.spriteRenderer.flipX = true;
-            }
+      if (action.movementSchema.direction.x < 0)
+      {
+        action.spriteRenderer.flipX = true;
+      }
 
-            if (action.movementSchema.direction.x > 0)
-            {
-                action.spriteRenderer.flipX = false;
-            }
-        }
+      if (action.movementSchema.direction.x > 0)
+      {
+        action.spriteRenderer.flipX = false;
+      }
     }
+  }
 }

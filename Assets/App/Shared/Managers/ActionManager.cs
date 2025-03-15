@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
 
-public class ActionManager
+public sealed class ActionManager
 {
   private readonly Dictionary<Type, object> _handlers = new();
 
-  public ActionManager()
+  private static readonly Lazy<ActionManager> _instance = new(() => new ActionManager());
+  public static ActionManager Instance => _instance.Value;
+
+  private ActionManager()
   {
     var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
     var handlerTypes = new List<Type>();
 
     foreach (var asm in assemblies)
@@ -54,15 +55,13 @@ public class ActionManager
     if (handlerObj is IActionHandler<TAction> typedHandler)
     {
       typedHandler.Execute(action);
+      return;
     }
-    else
-    {
-      throw new Exception($"Handler for {actionType.Name} is not of type IActionHandler<{actionType.Name}>");
-    }
+
+    throw new Exception($"Handler for {actionType.Name} does not implement IActionHandler<TAction>!");
   }
 
-  
-  public TOut Execute<TAction, TOut>(TAction action) where TAction : struct
+  public TResult Execute<TAction, TResult>(TAction action) where TAction : struct
   {
     var actionType = typeof(TAction);
 
@@ -71,13 +70,11 @@ public class ActionManager
       throw new Exception($"No handler registered for {actionType.Name}");
     }
 
-    if (handlerObj is IActionHandler<TAction, TOut> typedHandler)
+    if (handlerObj is IActionHandler<TAction, TResult> typedHandler)
     {
       return typedHandler.Execute(action);
     }
-    else
-    {
-      throw new Exception($"Handler for {actionType.Name} is not of type IActionHandler<{actionType.Name}, {typeof(TOut).Name}>");
-    }
+
+    throw new Exception($"Handler for {actionType.Name} does not implement IActionHandler<TAction, TResult>!");
   }
 }

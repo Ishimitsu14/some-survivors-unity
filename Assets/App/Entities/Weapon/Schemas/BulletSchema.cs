@@ -1,8 +1,10 @@
+using AutoDeconstruct;
 using UnityEngine;
 
-public struct BulletSchema
+[AutoDeconstruct]
+public partial struct BulletSchema
 {
-    public GameObject enemy;
-    public GameObject bullet;
-    public BulletCollisionController bulletCollisionController;
+  public GameObject enemy;
+  public GameObject bullet;
+  public BulletCollisionController bulletCollisionController;
 }

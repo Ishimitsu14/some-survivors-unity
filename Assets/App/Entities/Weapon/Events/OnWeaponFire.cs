@@ -1,7 +1,9 @@
+using AutoDeconstruct;
 using UnityEngine;
 
-public struct OnWeaponFire
+[AutoDeconstruct]
+public partial struct OnWeaponFire
 {
-    public GameObject bulletPrefab;
-    public int weaponHolderId;
+  public GameObject bulletPrefab;
+  public int weaponHolderId;
 }

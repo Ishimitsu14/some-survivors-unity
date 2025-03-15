@@ -1,6 +1,8 @@
+using AutoDeconstruct;
 using UnityEngine;
 
-public struct OnBulletHitEnemy
+[AutoDeconstruct]
+public partial struct OnBulletHitEnemy
 {
-    public GameObject enemy;
+  public GameObject enemy;
 }

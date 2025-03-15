@@ -47,6 +47,8 @@
     "**/*.meta": true,
     "**/*.prefab": true,
     "**/*.unity": true,
+    "**/*.controller": true,
+    "**/*.anim": true,
     "build/": true,
     "Build/": true,
     "Library/": true,
@@ -60,5 +62,5 @@
     "temp/": true,
     "Temp/": true
   },
-  "dotnet.defaultSolution": "NonEcs.sln"
+  "dotnet.defaultSolution": "some-survivors-unity.sln"
 }

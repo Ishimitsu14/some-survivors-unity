@@ -1,10 +1,12 @@
 
+using AutoDeconstruct;
 using UnityEngine;
 
 [System.Serializable]
-public struct SpawnerConfigSchema
+[AutoDeconstruct]
+public partial struct SpawnerConfigSchema
 {
-    public GameObject prefab;
-    public float spawnEverySeconds;
-    public float countObjectsPerSecond;
+  public GameObject prefab;
+  public float spawnEverySeconds;
+  public float countObjectsPerSecond;
 }

@@ -1,18 +1,20 @@
+using AutoDeconstruct;
 using UnityEngine;
 
-public struct MoveEnemyAction
+[AutoDeconstruct]
+public partial struct MoveEnemyAction
 {
-    public EnemyStore store;
-    public Transform transform;
-    public float delta;
+  public EnemyStore store;
+  public Transform transform;
+  public float delta;
 }
 
 [ActionHandler(typeof(MoveEnemyAction))]
 public class MoveEnemyActionHandler : IActionHandler<MoveEnemyAction>
 {
-    public void Execute(MoveEnemyAction action)
-    {
-        action.transform.position += action.delta * action.store.movementSchema.moveSpeed *
-                                     action.store.movementSchema.direction;
-    }
+  public void Execute(MoveEnemyAction action)
+  {
+    action.transform.position += action.delta * action.store.movementSchema.moveSpeed *
+                                 action.store.movementSchema.direction;
+  }
 }
