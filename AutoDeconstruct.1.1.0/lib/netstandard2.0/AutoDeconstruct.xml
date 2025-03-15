@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AutoDeconstruct</name>
+    </assembly>
+    <members>
+        <member name="T:AutoDeconstruct.AutoDeconstructAttribute">
+            <summary>
+            Instructs AutoDeconstruct to generate a <c>Deconstruct()</c> implementation.
+            </summary>
+        </member>
+        <member name="M:AutoDeconstruct.AutoDeconstructAttribute.#ctor(AutoDeconstruct.SearchForExtensionMethods)">
+            <summary>
+            Creates a new <see cref="T:AutoDeconstruct.AutoDeconstructAttribute"/> instance.
+            </summary>
+            <param name="search">
+            Specifies if AutoDeconstruct should search for exisiting <c>Deconstruct()</c> extension methods. 
+            The default is <see cref="F:AutoDeconstruct.SearchForExtensionMethods.No"/>.
+            </param>
+        </member>
+        <member name="P:AutoDeconstruct.AutoDeconstructAttribute.Search">
+            <summary>
+            Gets the extension method search value.
+            </summary>
+        </member>
+        <member name="T:AutoDeconstruct.EquatableArray">
+            <summary>
+            Extensions for <see cref="T:AutoDeconstruct.EquatableArray`1"/>.
+            </summary>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray.AsEquatableArray``1(System.Collections.Immutable.ImmutableArray{``0})">
+            <summary>
+            Creates an <see cref="T:AutoDeconstruct.EquatableArray`1"/> instance from a given <see cref="T:System.Collections.Immutable.ImmutableArray`1"/>.
+            </summary>
+            <typeparam name="T">The type of items in the input array.</typeparam>
+            <param name="array">The input <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> instance.</param>
+            <returns>An <see cref="T:AutoDeconstruct.EquatableArray`1"/> instance from a given <see cref="T:System.Collections.Immutable.ImmutableArray`1"/>.</returns>
+        </member>
+        <member name="T:AutoDeconstruct.EquatableArray`1">
+            <summary>
+            An imutable, equatable array. This is equivalent to <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> but with value equality support.
+            </summary>
+            <typeparam name="T">The type of values in the array.</typeparam>
+        </member>
+        <member name="F:AutoDeconstruct.EquatableArray`1.array">
+            <summary>
+            The underlying <typeparamref name="T"/> array.
+            </summary>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.#ctor(System.Collections.Immutable.ImmutableArray{`0})">
+            <summary>
+            Creates a new <see cref="T:AutoDeconstruct.EquatableArray`1"/> instance.
+            </summary>
+            <param name="array">The input <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> to wrap.</param>
+        </member>
+        <member name="P:AutoDeconstruct.EquatableArray`1.Item(System.Int32)">
+            <summary>
+            Gets a reference to an item at a specified position within the array.
+            </summary>
+            <param name="index">The index of the item to retrieve a reference to.</param>
+            <returns>A reference to an item at a specified position within the array.</returns>
+        </member>
+        <member name="P:AutoDeconstruct.EquatableArray`1.IsEmpty">
+            <summary>
+            Gets a value indicating whether the current array is empty.
+            </summary>
+        </member>
+        <member name="P:AutoDeconstruct.EquatableArray`1.IsDefaultOrEmpty">
+            <summary>
+            Gets a value indicating whether the current array is default or empty.
+            </summary>
+        </member>
+        <member name="P:AutoDeconstruct.EquatableArray`1.Length">
+            <summary>
+            Gets the length of the current array.
+            </summary>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.Equals(AutoDeconstruct.EquatableArray{`0})">
+            <sinheritdoc/>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.Equals(System.Object)">
+            <sinheritdoc/>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.GetHashCode">
+            <sinheritdoc/>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.AsImmutableArray">
+            <summary>
+            Gets an <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> instance from the current <see cref="T:AutoDeconstruct.EquatableArray`1"/>.
+            </summary>
+            <returns>The <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> from the current <see cref="T:AutoDeconstruct.EquatableArray`1"/>.</returns>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.FromImmutableArray(System.Collections.Immutable.ImmutableArray{`0})">
+            <summary>
+            Creates an <see cref="T:AutoDeconstruct.EquatableArray`1"/> instance from a given <see cref="T:System.Collections.Immutable.ImmutableArray`1"/>.
+            </summary>
+            <param name="array">The input <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> instance.</param>
+            <returns>An <see cref="T:AutoDeconstruct.EquatableArray`1"/> instance from a given <see cref="T:System.Collections.Immutable.ImmutableArray`1"/>.</returns>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.AsSpan">
+            <summary>
+            Returns a <see cref="T:System.ReadOnlySpan`1"/> wrapping the current items.
+            </summary>
+            <returns>A <see cref="T:System.ReadOnlySpan`1"/> wrapping the current items.</returns>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.ToArray">
+            <summary>
+            Copies the contents of this <see cref="T:AutoDeconstruct.EquatableArray`1"/> instance. to a mutable array.
+            </summary>
+            <returns>The newly instantiated array.</returns>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.GetEnumerator">
+            <summary>
+            Gets an <see cref="T:System.Collections.Immutable.ImmutableArray`1.Enumerator"/> value to traverse items in the current array.
+            </summary>
+            <returns>An <see cref="T:System.Collections.Immutable.ImmutableArray`1.Enumerator"/> value to traverse items in the current array.</returns>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.System#Collections#Generic#IEnumerable{T}#GetEnumerator">
+            <sinheritdoc/>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.System#Collections#IEnumerable#GetEnumerator">
+            <sinheritdoc/>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.op_Implicit(System.Collections.Immutable.ImmutableArray{`0})~AutoDeconstruct.EquatableArray{`0}">
+            <summary>
+            Implicitly converts an <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> to <see cref="T:AutoDeconstruct.EquatableArray`1"/>.
+            </summary>
+            <returns>An <see cref="T:AutoDeconstruct.EquatableArray`1"/> instance from a given <see cref="T:System.Collections.Immutable.ImmutableArray`1"/>.</returns>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.op_Implicit(AutoDeconstruct.EquatableArray{`0})~System.Collections.Immutable.ImmutableArray{`0}">
+            <summary>
+            Implicitly converts an <see cref="T:AutoDeconstruct.EquatableArray`1"/> to <see cref="T:System.Collections.Immutable.ImmutableArray`1"/>.
+            </summary>
+            <returns>An <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> instance from a given <see cref="T:AutoDeconstruct.EquatableArray`1"/>.</returns>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.op_Equality(AutoDeconstruct.EquatableArray{`0},AutoDeconstruct.EquatableArray{`0})">
+            <summary>
+            Checks whether two <see cref="T:AutoDeconstruct.EquatableArray`1"/> values are the same.
+            </summary>
+            <param name="left">The first <see cref="T:AutoDeconstruct.EquatableArray`1"/> value.</param>
+            <param name="right">The second <see cref="T:AutoDeconstruct.EquatableArray`1"/> value.</param>
+            <returns>Whether <paramref name="left"/> and <paramref name="right"/> are equal.</returns>
+        </member>
+        <member name="M:AutoDeconstruct.EquatableArray`1.op_Inequality(AutoDeconstruct.EquatableArray{`0},AutoDeconstruct.EquatableArray{`0})">
+            <summary>
+            Checks whether two <see cref="T:AutoDeconstruct.EquatableArray`1"/> values are not the same.
+            </summary>
+            <param name="left">The first <see cref="T:AutoDeconstruct.EquatableArray`1"/> value.</param>
+            <param name="right">The second <see cref="T:AutoDeconstruct.EquatableArray`1"/> value.</param>
+            <returns>Whether <paramref name="left"/> and <paramref name="right"/> are not equal.</returns>
+        </member>
+        <member name="T:AutoDeconstruct.NoAutoDeconstructAttribute">
+            <summary>
+            Prevents AutoDeconstruct from generating a <c>Deconstruct()</c> implementation.
+            </summary>
+        </member>
+        <member name="T:AutoDeconstruct.SearchForExtensionMethods">
+            <summary>
+            Allows the user to search for <c>Deconstruct()</c> extension methods.
+            By default, AutoDeconstruct will not do this search as it's not typical
+            for developers to create <c>Deconstruct()</c> extension methods.
+            </summary>
+        </member>
+        <member name="F:AutoDeconstruct.SearchForExtensionMethods.No">
+            <summary>
+            Do not search for <c>Deconstruct()</c> extension methods.
+            </summary>
+        </member>
+        <member name="F:AutoDeconstruct.SearchForExtensionMethods.Yes">
+            <summary>
+            Search for <c>Deconstruct()</c> extension methods.
+            </summary>
+        </member>
+    </members>
+</doc>
