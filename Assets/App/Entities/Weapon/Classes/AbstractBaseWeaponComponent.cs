@@ -3,68 +3,68 @@ using UnityEngine;
 
 public abstract class AbstractBaseWeaponComponent : MonoBehaviour
 {
-    protected WeaponStore _store;
+  protected WeaponStore _store;
 
-    protected virtual void Awake()
+  protected virtual void Awake()
+  {
+    TryGetComponent(out _store);
+  }
+
+  protected virtual void Start()
+  {
+    _store.bullets.CollectionChanged += OnBulltsChange;
+  }
+
+  private void OnBulltsChange(object sender, NotifyCollectionChangedEventArgs e)
+  {
+    if (e.NewItems != null)
     {
-        TryGetComponent(out _store);
+      foreach (BulletSchema bulletSchema in e.NewItems)
+      {
+        OnBulletCreate(bulletSchema);
+        bulletSchema.collisionRelay.OnTriggerEnter2DRelay +=
+            C => OnBulletCollisionEnter(C, bulletSchema);
+      }
     }
 
-    protected virtual void Start()
+    if (e.OldItems != null)
     {
-        _store.bullets.CollectionChanged += OnChangeBullets;
-    }
+      foreach (BulletSchema bulletSchema in e.OldItems)
+      {
+        bulletSchema
+            .collisionRelay
+            .OnTriggerEnter2DRelay -= C => OnBulletCollisionEnter(C, bulletSchema);
 
-    private void OnChangeBullets(object sender, NotifyCollectionChangedEventArgs e)
+        Destroy(bulletSchema.bullet);
+      }
+    }
+  }
+
+  private void OnBulletCollisionEnter(Collider2D collider, BulletSchema bulletSchema)
+  {
+    if (collider.CompareTag(GameTags.Enemy))
     {
-        if (e.NewItems != null)
+      OnBulletCollision(collider, bulletSchema);
+    }
+  }
+
+  protected void HitEnemy(GameObject enemy)
+  {
+    EventManager<OnBulletHitEnemy>.Emit(
+        new OnBulletHitEnemy
         {
-            foreach (BulletSchema bulletSchema in e.NewItems)
-            {
-                HandleBulletCreated(bulletSchema);
-                bulletSchema.bulletCollisionController.OnBulletCollisionEnter +=
-                    (C => OnBulletCollisionEnter(C, bulletSchema));
-            }
-        }
+          enemy = enemy,
+        },
+        gameObject.GetInstanceID()
+    );
+  }
 
-        if (e.OldItems != null)
-        {
-            foreach (BulletSchema bulletSchema in e.OldItems)
-            {
-                bulletSchema
-                    .bulletCollisionController
-                    .OnBulletCollisionEnter -= (C => OnBulletCollisionEnter(C, bulletSchema));
-                
-                Destroy(bulletSchema.bullet);
-            }
-        }
-    }
+  private void OnDisable()
+  {
+    _store.bullets.CollectionChanged -= OnBulltsChange;
+  }
 
-    private void OnBulletCollisionEnter(Collider2D collider, BulletSchema bulletSchema)
-    {
-        if (collider.CompareTag(GameTags.Enemy))
-        {
-            HandleBulletCollision(collider, bulletSchema);
-        }
-    }
+  protected abstract void OnBulletCreate(BulletSchema bulletSchema);
 
-    protected void HitEnemy(GameObject enemy)
-    {
-        EventManager<OnBulletHitEnemy>.Emit(
-            new OnBulletHitEnemy
-            {
-                enemy = enemy,
-            },
-            gameObject.GetInstanceID()
-        );
-    }
-
-    private void OnDisable()
-    {
-        _store.bullets.CollectionChanged -= OnChangeBullets;
-    }
-
-    protected abstract void HandleBulletCreated(BulletSchema bulletSchema);
-
-    protected abstract void HandleBulletCollision(Collider2D collider, BulletSchema bulletSchema);
+  protected abstract void OnBulletCollision(Collider2D collider, BulletSchema bulletSchema);
 }

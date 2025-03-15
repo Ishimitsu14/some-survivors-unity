@@ -16,6 +16,6 @@ public class AnimatePlayerMoveActionHandler : IActionHandler<AnimatePlayerMoveAc
   {
     var (animator, store) = action;
 
-    animator.SetFloat("Speed", math.cmax(math.abs(store.movementSchema.direction)));
+    animator.SetFloat("Speed", math.cmax(math.abs(store.movement.direction)));
   }
 }

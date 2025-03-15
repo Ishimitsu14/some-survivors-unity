@@ -17,7 +17,7 @@ public class MovePlayerActionHandler : IActionHandler<MovePlayerAction>
   {
     var (delta, store, transform) = action;
 
-    transform.position += store.movementSchema.direction * (delta * store.movementSchema.moveSpeed);
+    transform.position += delta * store.movement.moveSpeed * store.movement.direction;
 
     EventManager<OnPlayerMove>.Emit(new OnPlayerMove
     {

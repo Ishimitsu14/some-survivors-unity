@@ -21,9 +21,9 @@ public class EnemySpawnController : MonoBehaviour
   {
     while (true)
     {
-      var prefab = _store.spawnerConfigSchema.prefab;
-      var spawnCount = _store.spawnerConfigSchema.countObjectsPerSecond;
-      var spawnInterval = _store.spawnerConfigSchema.spawnEverySeconds;
+      var prefab = _store.spawnerConfig.prefab;
+      var spawnCount = _store.spawnerConfig.objectsPerTick;
+      var spawnInterval = _store.spawnerConfig.spawnRate;
 
       for (int i = 0; i < spawnCount; i++)
       {

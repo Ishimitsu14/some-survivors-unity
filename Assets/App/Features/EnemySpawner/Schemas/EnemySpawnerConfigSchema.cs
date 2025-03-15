@@ -4,9 +4,9 @@ using UnityEngine;
 
 [System.Serializable]
 [AutoDeconstruct]
-public partial struct SpawnerConfigSchema
+public partial struct EnemySpawnerConfigSchema
 {
   public GameObject prefab;
-  public float spawnEverySeconds;
-  public float countObjectsPerSecond;
+  public float spawnRate;
+  public float objectsPerTick;
 }

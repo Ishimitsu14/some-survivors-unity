@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponStore : Store
 {
-    public WeaponConfigSchema weaponConfig;
-    public GameObject weaponHolder;
-    public ObservableCollection<BulletSchema> bullets = new ();
+  public WeaponConfigSchema weaponConfig;
+  public GameObject weaponHolder;
+  public ObservableCollection<BulletSchema> bullets = new();
 }

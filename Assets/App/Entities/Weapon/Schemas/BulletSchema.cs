@@ -6,5 +6,5 @@ public partial struct BulletSchema
 {
   public GameObject enemy;
   public GameObject bullet;
-  public BulletCollisionController bulletCollisionController;
+  public CollisionRelay collisionRelay;
 }

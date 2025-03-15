@@ -19,6 +19,11 @@ public class PlayerMovementController : MonoBehaviour
 
   private void HandleMovement()
   {
+    if (Vector3.zero.Equals(_store.movement.direction))
+    {
+      return;
+    }
+
     ActionManager.Instance.Execute(new MovePlayerAction
     {
       store = _store,
@@ -33,7 +38,7 @@ public class PlayerMovementController : MonoBehaviour
     ActionManager.Instance.Execute(new SpriteFlipAction
     {
       spriteRenderer = _spriteRenderer,
-      movementSchema = _store.movementSchema,
+      movementSchema = _store.movement,
     }
     );
   }

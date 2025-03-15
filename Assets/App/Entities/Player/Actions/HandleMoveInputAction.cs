@@ -16,6 +16,6 @@ public class HandleMoveInputActionHandler : IActionHandler<HandleMoveInputAction
   {
     var (inputContext, store) = action;
 
-    store.movementSchema.direction = inputContext.ReadValue<Vector2>();
+    store.movement.direction = inputContext.ReadValue<Vector2>();
   }
 }
