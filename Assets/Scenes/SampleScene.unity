@@ -530,6 +530,10 @@ PrefabInstance:
       propertyPath: weaponConfig.projectileKind
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1822841100694906385, guid: af1c908c1555eec49a403b4656b78eae, type: 3}
+      propertyPath: weaponConfig.projectileQuantity
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2803497399132066681, guid: af1c908c1555eec49a403b4656b78eae, type: 3}
       propertyPath: m_IsTrigger
       value: 1

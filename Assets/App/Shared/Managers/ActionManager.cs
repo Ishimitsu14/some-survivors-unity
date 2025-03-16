@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 public sealed class ActionManager
 {
+  private static readonly Lazy<ActionManager> _Instance = new(() => new ActionManager());
   private readonly Dictionary<Type, object> _handlers = new();
-
-  private static readonly Lazy<ActionManager> _instance = new(() => new ActionManager());
-  public static ActionManager Instance => _instance.Value;
 
   private ActionManager()
   {
@@ -17,17 +16,11 @@ public sealed class ActionManager
     foreach (var asm in assemblies)
     {
       var types = asm.GetTypes();
-      foreach (var type in types)
-      {
-        if (type.IsClass && !type.IsAbstract)
-        {
-          var attr = type.GetCustomAttribute<ActionHandlerAttribute>(false);
-          if (attr != null)
-          {
-            handlerTypes.Add(type);
-          }
-        }
-      }
+      handlerTypes.AddRange(from type in types
+        where type.IsClass && !type.IsAbstract
+        let attr = type.GetCustomAttribute<ActionHandlerAttribute>(false)
+        where attr != null
+        select type);
     }
 
     foreach (var hType in handlerTypes)
@@ -43,22 +36,18 @@ public sealed class ActionManager
     }
   }
 
+  public static ActionManager Instance => _Instance.Value;
+
   public void Execute<TAction>(TAction action) where TAction : struct
   {
     var actionType = typeof(TAction);
 
     if (!_handlers.TryGetValue(actionType, out var handlerObj))
-    {
       throw new Exception($"No handler registered for {actionType.Name}");
-    }
 
-    if (handlerObj is IActionHandler<TAction> typedHandler)
-    {
-      typedHandler.Execute(action);
-      return;
-    }
-
-    throw new Exception($"Handler for {actionType.Name} does not implement IActionHandler<TAction>!");
+    if (handlerObj is not IActionHandler<TAction> typedHandler)
+      throw new Exception($"Handler for {actionType.Name} does not implement IActionHandler<TAction>!");
+    typedHandler.Execute(action);
   }
 
   public TResult Execute<TAction, TResult>(TAction action) where TAction : struct
@@ -66,14 +55,9 @@ public sealed class ActionManager
     var actionType = typeof(TAction);
 
     if (!_handlers.TryGetValue(actionType, out var handlerObj))
-    {
       throw new Exception($"No handler registered for {actionType.Name}");
-    }
 
-    if (handlerObj is IActionHandler<TAction, TResult> typedHandler)
-    {
-      return typedHandler.Execute(action);
-    }
+    if (handlerObj is IActionHandler<TAction, TResult> typedHandler) return typedHandler.Execute(action);
 
     throw new Exception($"Handler for {actionType.Name} does not implement IActionHandler<TAction, TResult>!");
   }

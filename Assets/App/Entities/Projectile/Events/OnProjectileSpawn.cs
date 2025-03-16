@@ -6,7 +6,6 @@ using UnityEngine;
 public partial struct OnProjectileSpawn
 {
   public ProjectileKind kind;
-  public WeaponAttackType attackType;
   public float damage;
   public float moveSpeed;
   public float destructionRadius;

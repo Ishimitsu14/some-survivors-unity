@@ -12,7 +12,7 @@ public partial struct MoveFireballAction
 }
 
 [ActionHandler(typeof(MoveFireballAction))]
-class MoveFireballActionHandler : IActionHandler<MoveFireballAction, FireballConfigSchema>
+public class MoveFireballActionHandler : IActionHandler<MoveFireballAction, FireballConfigSchema>
 {
   public FireballConfigSchema Execute(MoveFireballAction action)
   {
@@ -22,16 +22,13 @@ class MoveFireballActionHandler : IActionHandler<MoveFireballAction, FireballCon
 
     if (!config.target.IsDestroyed())
     {
-
       direction = math.normalize(config.target.transform.position - projectile.transform.position);
       config.lastDirection = direction;
     }
     else
     {
       if (config.lastDirection.Equals(Vector3.zero))
-      {
         throw new Exception("Impossible to move. Target has been destroyed, last target position not defined");
-      }
 
       direction = config.lastDirection;
     }

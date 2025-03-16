@@ -61,19 +61,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponConfig:
-    damage: 0
+    damage: 40
     range: 5
     fireRate: 2
     punchPower: 0
     moveSpeed: 0
     destructionRadius: 0
     projectileLifetime: 0
-    weaponComponent: {fileID: 0}
-    bulletPrefab: {fileID: 77701729905647302, guid: 23b2d24c8ded2494a8fefda896dbef95, type: 3}
     projectileKind: 0
     attackType: 0
-    projectileQuantity: 0
-  weaponHolder: {fileID: 0}
+    projectileQuantity: 1
 --- !u!114 &1264525237030442931
 MonoBehaviour:
   m_ObjectHideFlags: 0

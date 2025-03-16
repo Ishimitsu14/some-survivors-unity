@@ -58,7 +58,6 @@ public class WeaponFireController : MonoBehaviour
       EventManager<OnProjectileSpawn>.Emit(new OnProjectileSpawn
       {
         kind = _store.weaponConfig.projectileKind,
-        attackType = _store.weaponConfig.attackType,
         damage = _store.weaponConfig.damage,
         moveSpeed = _store.weaponConfig.moveSpeed,
         destructionRadius = _store.weaponConfig.destructionRadius,

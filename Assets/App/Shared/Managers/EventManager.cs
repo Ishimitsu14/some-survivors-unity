@@ -19,16 +19,16 @@ public static class EventManager<TEvent> where TEvent : struct
     if (id.HasValue && _FilteredEvents.TryGetValue(id.Value, out var specificEvent)) specificEvent?.Invoke(eventData);
   }
 
-  public static EventManagerWithId WithId(int id)
+  public static EventManagerWithScope WithScope(int id)
   {
-    return new EventManagerWithId(id);
+    return new EventManagerWithScope(id);
   }
 
-  public class EventManagerWithId
+  public class EventManagerWithScope
   {
     private readonly int _id;
 
-    public EventManagerWithId(int id)
+    public EventManagerWithScope(int id)
     {
       _id = id;
     }
