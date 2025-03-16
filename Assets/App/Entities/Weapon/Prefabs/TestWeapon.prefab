@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 655379302575118936}
   - component: {fileID: 6966851939688385563}
   - component: {fileID: 1264525237030442931}
-  - component: {fileID: -5434714409691152155}
   - component: {fileID: 2121418037992432928}
+  - component: {fileID: 8239308823729464551}
   m_Layer: 0
   m_Name: TestWeapon
   m_TagString: Untagged
@@ -61,9 +61,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponConfig:
-    damage: 40
+    damage: 20
     range: 5
-    fireRate: 2
+    fireRate: 1
     punchPower: 0
     moveSpeed: 0
     destructionRadius: 0
@@ -83,8 +83,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a70de93be58465aa314275d343cd8ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &-5434714409691152155
-BoxCollider2D:
+--- !u!114 &2121418037992432928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108333706137027448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ced0762e6c430e92a0cf6f26c6ef4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &8239308823729464551
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,26 +130,4 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 5, y: 5}
-  m_EdgeRadius: 0
---- !u!114 &2121418037992432928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5108333706137027448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32ced0762e6c430e92a0cf6f26c6ef4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Radius: 0.5
