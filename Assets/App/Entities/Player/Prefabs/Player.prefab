@@ -18,9 +18,10 @@ GameObject:
   - component: {fileID: 5909794294077348546}
   - component: {fileID: 4996001164118946592}
   - component: {fileID: 3083847321460442825}
-  m_Layer: 0
+  - component: {fileID: 1105807598281594414}
+  m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,7 +36,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2395738957346378249}
@@ -152,17 +153,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.019424252, y: -0.026650876}
+  m_Offset: {x: 0.19049251, y: -0.10850839}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.2, y: 0.34}
+    oldSize: {x: 1.25, y: 2.125}
     newSize: {x: 0.2, y: 0.34}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.17556424, y: 0.20669824}
+  m_Size: {x: 0.869015, y: 1.1363677}
   m_EdgeRadius: 0
 --- !u!114 &5462814007496193629
 MonoBehaviour:
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement:
-    moveSpeed: 5
+    moveSpeed: 7.5
     direction: {x: 0, y: 0, z: 0}
 --- !u!114 &7440950295255493344
 MonoBehaviour:
@@ -239,6 +240,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3efea5470a73734a9eecb5caee7af04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &1105807598281594414
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3784670180692018530}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1000
+  m_LinearDamping: 0
+  m_AngularDamping: 0.1
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1001 &8782919496826939914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -250,6 +278,10 @@ PrefabInstance:
     - target: {fileID: 5108333706137027448, guid: 9ddf88aeb4dc1fc4ba40d8fbf695ef21, type: 3}
       propertyPath: m_Name
       value: TestWeapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5108333706137027448, guid: 9ddf88aeb4dc1fc4ba40d8fbf695ef21, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6403113016078563331, guid: 9ddf88aeb4dc1fc4ba40d8fbf695ef21, type: 3}
       propertyPath: m_LocalPosition.x
@@ -292,12 +324,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6966851939688385563, guid: 9ddf88aeb4dc1fc4ba40d8fbf695ef21, type: 3}
+      propertyPath: weaponConfig.range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966851939688385563, guid: 9ddf88aeb4dc1fc4ba40d8fbf695ef21, type: 3}
       propertyPath: weaponConfig.damage
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6966851939688385563, guid: 9ddf88aeb4dc1fc4ba40d8fbf695ef21, type: 3}
       propertyPath: weaponConfig.fireRate
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966851939688385563, guid: 9ddf88aeb4dc1fc4ba40d8fbf695ef21, type: 3}
+      propertyPath: weaponConfig.projectileQuantity
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
