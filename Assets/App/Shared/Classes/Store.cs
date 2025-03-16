@@ -1,6 +1,5 @@
 using UnityEngine;
 
-public class Store : MonoBehaviour
+public abstract class Store : MonoBehaviour
 {
-    
 }

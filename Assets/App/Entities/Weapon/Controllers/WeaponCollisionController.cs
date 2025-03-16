@@ -6,8 +6,6 @@ public class WeaponCollisionController : MonoBehaviour
   private CircleCollider2D _collider;
 
   private WeaponStore _store;
-  public Action<GameObject> OnEnemyInWeaponRange;
-  public Action<GameObject> OnEnemyOutWeaponRange;
 
   private void Awake()
   {
@@ -22,11 +20,15 @@ public class WeaponCollisionController : MonoBehaviour
 
   private void OnTriggerEnter2D(Collider2D other)
   {
-    if (_collider != null && other.CompareTag(GameTags.Enemy)) OnEnemyInWeaponRange.Invoke(other.gameObject);
+    if (_collider == null || !other.CompareTag(GameTags.Enemy)) return;
+    OnEnemyInWeaponRange?.Invoke(other.gameObject);
   }
 
   private void OnTriggerExit2D(Collider2D other)
   {
     if (other != null && other.CompareTag(GameTags.Enemy)) OnEnemyOutWeaponRange?.Invoke(other.gameObject);
   }
+
+  public event Action<GameObject> OnEnemyInWeaponRange;
+  public event Action<GameObject> OnEnemyOutWeaponRange;
 }

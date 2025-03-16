@@ -49,7 +49,6 @@ public static class EventManager<TEvent> where TEvent : struct
 
           if (_FilteredEvents[_id] == null) _FilteredEvents.Remove(_id);
         }
-
         ;
       }
     }

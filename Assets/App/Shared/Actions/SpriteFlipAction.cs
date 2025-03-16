@@ -5,7 +5,7 @@ using UnityEngine;
 public partial struct SpriteFlipAction
 {
   public SpriteRenderer spriteRenderer;
-  public MovementSchema movementSchema;
+  public MovementSchema movement;
 }
 
 [ActionHandler(typeof(SpriteFlipAction))]
@@ -13,17 +13,13 @@ public class SpriteFlipActionHandler : IActionHandler<SpriteFlipAction>
 {
   public void Execute(SpriteFlipAction action)
   {
-    if (action.spriteRenderer)
-    {
-      if (action.movementSchema.direction.x < 0)
-      {
-        action.spriteRenderer.flipX = true;
-      }
+    var (spriteRenderer, movementSchema) = action;
 
-      if (action.movementSchema.direction.x > 0)
-      {
-        action.spriteRenderer.flipX = false;
-      }
-    }
+    spriteRenderer.flipX = movementSchema.direction.x switch
+    {
+      < 0 => true,
+      > 0 => false,
+      _ => spriteRenderer.flipX
+    };
   }
 }

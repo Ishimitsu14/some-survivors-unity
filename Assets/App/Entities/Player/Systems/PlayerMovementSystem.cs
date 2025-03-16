@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerMovementSystem : MonoBehaviour
 {
-  private PlayerStore _store;
   private SpriteRenderer _spriteRenderer;
+  private PlayerStore _store;
 
   private void Awake()
   {
@@ -19,27 +19,24 @@ public class PlayerMovementSystem : MonoBehaviour
 
   private void HandleMovement()
   {
-    if (Vector3.zero.Equals(_store.movement.direction))
-    {
-      return;
-    }
+    if (Vector3.zero.Equals(_store.movement.direction)) return;
 
     ActionManager.Instance.Execute(new MovePlayerAction
-    {
-      store = _store,
-      transform = gameObject.transform,
-      delta = Time.deltaTime,
-    }
+      {
+        store = _store,
+        transform = gameObject.transform,
+        delta = Time.deltaTime
+      }
     );
   }
 
   private void HandleFlip()
   {
     ActionManager.Instance.Execute(new SpriteFlipAction
-    {
-      spriteRenderer = _spriteRenderer,
-      movementSchema = _store.movement,
-    }
+      {
+        spriteRenderer = _spriteRenderer,
+        movement = _store.movement
+      }
     );
   }
 }
