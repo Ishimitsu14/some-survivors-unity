@@ -4,11 +4,12 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(EnemyMovementController))]
 [RequireComponent(typeof(EnemyWithPlayerInteractController))]
-[RequireComponent(typeof(EnemyStateController))]
+[RequireComponent(typeof(EnemyLifeController))]
+[RequireComponent(typeof(EnemyDamageController))]
 public class EnemyAuthority : MonoBehaviour
 {
-    protected void Awake()
-    {
-        gameObject.tag = GameTags.Enemy;
-    }
+  protected void Awake()
+  {
+    gameObject.tag = GameTags.Enemy;
+  }
 }

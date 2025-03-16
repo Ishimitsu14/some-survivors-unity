@@ -1,8 +1,9 @@
 
+using System;
 using AutoDeconstruct;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 [AutoDeconstruct]
 public partial struct EnemySpawnerConfigSchema
 {

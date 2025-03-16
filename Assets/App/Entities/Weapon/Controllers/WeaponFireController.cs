@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class WeaponFireController : MonoBehaviour
 {
@@ -16,11 +17,6 @@ public class WeaponFireController : MonoBehaviour
     TryGetComponent(out _collisionController);
   }
 
-  private void OnEnable()
-  {
-    EventManager<OnBulletHitEnemy>.WithId(gameObject.GetInstanceID()).On += OnBulletHitEnemy;
-  }
-
   private void Start()
   {
     _collisionController.OnEnemyInWeaponRange += HandleEnemyInWeaponRange;
@@ -31,10 +27,7 @@ public class WeaponFireController : MonoBehaviour
   {
     if (_enemies.TryAdd(enemy.GetInstanceID(), enemy))
     {
-      if (_fireCoroutine == null)
-      {
-        _fireCoroutine = StartCoroutine(FireCoroutine());
-      }
+      _fireCoroutine ??= StartCoroutine(FireCoroutine());
     }
   }
 
@@ -53,32 +46,23 @@ public class WeaponFireController : MonoBehaviour
   {
     while (_enemies.Count > 0)
     {
-      GameObject closestEnemy = null;
-      float minDistance = float.MaxValue;
+      var possibleTargets = _enemies.ToDictionary(
+        item => item.Key,
+        item => item.Value.transform.position
+      );
 
-      foreach (var enemy in _enemies.Values)
+      EventManager<OnProjectileSpawn>.Emit(new OnProjectileSpawn
       {
-        float distance = Vector2.Distance(_store.weaponHolder.transform.position, enemy.transform.position);
-        if (distance < minDistance)
-        {
-          minDistance = distance;
-          closestEnemy = enemy;
-        }
-      }
-
-
-      var holderTransform = _store.weaponHolder.transform;
-      var bullet = Instantiate(_store.weaponConfig.bulletPrefab, holderTransform.position, Quaternion.identity);
-
-      var collisionRelay = bullet.AddComponent<CollisionRelay>();
-
-      _store.bullets.Add(new BulletSchema
-      {
-        enemy = closestEnemy,
-        bullet = bullet,
-        collisionRelay = collisionRelay,
+        kind = _store.weaponConfig.projectileKind,
+        attackType = _store.weaponConfig.attackType,
+        damage = _store.weaponConfig.damage,
+        moveSpeed = _store.weaponConfig.moveSpeed,
+        destructionRadius = _store.weaponConfig.destructionRadius,
+        lifeTime = _store.weaponConfig.projectileLifetime,
+        startPoint = transform.position,
+        quantity = _store.weaponConfig.projectileQuantity,
+        possibleTargets = possibleTargets
       });
-
 
       yield return new WaitForSeconds(_store.weaponConfig.fireRate);
     }
@@ -86,20 +70,10 @@ public class WeaponFireController : MonoBehaviour
     _fireCoroutine = null;
   }
 
-  private void OnBulletHitEnemy(OnBulletHitEnemy bulletHitEnemy)
-  {
-    EventManager<OnWeaponDamageEnemy>.Emit(new OnWeaponDamageEnemy
-    {
-      damage = _store.weaponConfig.damage,
-      punchPower = _store.weaponConfig.punchPower,
-    }, bulletHitEnemy.enemy.GetInstanceID());
-  }
-
   private void OnDisable()
   {
     _collisionController.OnEnemyInWeaponRange -= HandleEnemyInWeaponRange;
     _collisionController.OnEnemyOutWeaponRange -= HandleEnemyOutWeaponRange;
-    EventManager<OnBulletHitEnemy>.WithId(gameObject.GetInstanceID()).On -= OnBulletHitEnemy;
 
     if (_fireCoroutine != null)
     {

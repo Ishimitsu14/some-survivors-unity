@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 655379302575118936}
   - component: {fileID: 6966851939688385563}
   - component: {fileID: 1264525237030442931}
-  - component: {fileID: 4852178189168084223}
   - component: {fileID: -5434714409691152155}
   - component: {fileID: 2121418037992432928}
   m_Layer: 0
@@ -66,8 +65,14 @@ MonoBehaviour:
     range: 5
     fireRate: 2
     punchPower: 0
+    moveSpeed: 0
+    destructionRadius: 0
+    projectileLifetime: 0
     weaponComponent: {fileID: 0}
     bulletPrefab: {fileID: 77701729905647302, guid: 23b2d24c8ded2494a8fefda896dbef95, type: 3}
+    projectileKind: 0
+    attackType: 0
+    projectileQuantity: 0
   weaponHolder: {fileID: 0}
 --- !u!114 &1264525237030442931
 MonoBehaviour:
@@ -79,18 +84,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a70de93be58465aa314275d343cd8ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4852178189168084223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5108333706137027448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc1cce949512425ea5bf9258965d5426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &-5434714409691152155

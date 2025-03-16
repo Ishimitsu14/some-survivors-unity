@@ -38,6 +38,8 @@ public class SpawnEnemyOutOfCameraActionHandler : IActionHandler<SpawnEnemyOutOf
       spawnPosition = new Vector3(xPos, yPos, 0);
     }
 
-    Object.Instantiate(prefab, spawnPosition, Quaternion.identity);
+    var enemy = Object.Instantiate(prefab, spawnPosition, Quaternion.identity);
+
+    enemy.name = enemy.GetInstanceID().ToString();
   }
 }

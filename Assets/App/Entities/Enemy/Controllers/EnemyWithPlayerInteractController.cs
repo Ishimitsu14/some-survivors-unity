@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class EnemyWithPlayerInteractController : MonoBehaviour
 {
-
   private EnemyStore _store;
-  private PlayerAuthority _player;
 
   private void Awake()
   {
@@ -17,19 +15,19 @@ public class EnemyWithPlayerInteractController : MonoBehaviour
     EventManager<OnPlayerMove>.On += FollowPlayer;
   }
 
+  private void OnDisable()
+  {
+    EventManager<OnPlayerMove>.On -= FollowPlayer;
+  }
+
   private void FollowPlayer(OnPlayerMove data)
   {
-    ActionManager.Instance.Execute(new EnemyFollowPlayerAction
+    ActionManager.Instance.Execute(new FollowEnemyToPlayerAction
     {
       playerTransform = data.Transform,
       enemyTransform = gameObject.transform,
       enemyStore = _store,
     }
     );
-  }
-
-  private void OnDisable()
-  {
-    EventManager<OnPlayerMove>.On -= FollowPlayer;
   }
 }

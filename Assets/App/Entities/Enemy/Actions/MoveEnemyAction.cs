@@ -14,7 +14,7 @@ public class MoveEnemyActionHandler : IActionHandler<MoveEnemyAction>
 {
   public void Execute(MoveEnemyAction action)
   {
-    action.transform.position += action.delta * action.store.movementSchema.moveSpeed *
-                                 action.store.movementSchema.direction;
+    action.transform.position += action.delta * action.store.movement.moveSpeed *
+                                 action.store.movement.direction;
   }
 }
