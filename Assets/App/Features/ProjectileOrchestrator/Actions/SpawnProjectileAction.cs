@@ -1,5 +1,5 @@
-using AutoDeconstruct;
 using System;
+using AutoDeconstruct;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -25,13 +25,12 @@ public class SpawnProjectileActionHandler : IActionHandler<SpawnProjectileAction
     store.projectiles.Add(projectile.GetInstanceID(), config);
   }
 
-  private GameObject GetProjectilePrefab(ProjectilePrefabConfigSchema config, ProjectileKind kind)
+  private static GameObject GetProjectilePrefab(ProjectilePrefabConfigSchema config, ProjectileKind kind)
   {
     return kind switch
     {
       ProjectileKind.Fireball => config.Fireball,
-      _ => throw new Exception($"Projectile Prefab for {kind} kind not defined"),
+      _ => throw new Exception($"Projectile Prefab for {kind} kind not defined")
     };
   }
-
 }

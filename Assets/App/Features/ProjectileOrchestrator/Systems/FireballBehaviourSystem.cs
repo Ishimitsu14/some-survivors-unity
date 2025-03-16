@@ -1,21 +1,31 @@
-using R3;
-using UnityEngine;
-using ObservableCollections;
 using System.Collections.Generic;
 using System.Linq;
+using ObservableCollections;
+using R3;
 using R3.Triggers;
+using UnityEngine;
 
 public class FireballBehaviourSystem : MonoBehaviour
 {
-  private ProjectileStore _store;
+  private const ProjectileKind Kind = ProjectileKind.Fireball;
+  private readonly Dictionary<GameObject, FireballConfigSchema> _items = new();
 
   private DisposableBag _disposableBag;
-
-  public Dictionary<GameObject, FireballConfigSchema> items = new();
+  private ProjectileStore _store;
 
   private void Awake()
   {
     TryGetComponent(out _store);
+  }
+
+  private void Update()
+  {
+    foreach (var key in _items.Keys.ToList())
+      _items[key] = ActionManager.Instance.Execute<MoveFireballAction, FireballConfigSchema>(new MoveFireballAction
+      {
+        projectile = key,
+        config = _items[key]
+      });
   }
 
   private void OnEnable()
@@ -24,13 +34,13 @@ public class FireballBehaviourSystem : MonoBehaviour
 
     _store.projectiles
       .ObserveDictionaryAdd()
-      .Where(e => e.Value.kind == ProjectileKind.Fireball)
+      .Where(e => e.Value.kind == Kind)
       .Subscribe(OnAdd)
       .AddTo(ref _disposableBag);
 
     _store.projectiles
       .ObserveDictionaryRemove()
-      .Where(e => e.Value.kind == ProjectileKind.Fireball)
+      .Where(e => e.Value.kind == Kind)
       .Subscribe(OnRemove)
       .AddTo(ref _disposableBag);
   }
@@ -38,18 +48,6 @@ public class FireballBehaviourSystem : MonoBehaviour
   private void OnDisable()
   {
     _disposableBag.Dispose();
-  }
-
-  private void Update()
-  {
-    foreach (var key in items.Keys.ToList())
-    {
-      items[key] = ActionManager.Instance.Execute<MoveFireballAction, FireballConfigSchema>(new MoveFireballAction
-      {
-        projectile = key,
-        config = items[key]
-      });
-    }
   }
 
   private void OnAdd(DictionaryAddEvent<int, ProjectileConfigSchema> item)
@@ -68,7 +66,7 @@ public class FireballBehaviourSystem : MonoBehaviour
       .Subscribe(OnHit)
       .AddTo(ref _disposableBag);
 
-    items.TryAdd(projectile, new FireballConfigSchema
+    _items.TryAdd(projectile, new FireballConfigSchema
     {
       damage = item.Value.damage,
       moveSpeed = item.Value.moveSpeed,
@@ -82,7 +80,7 @@ public class FireballBehaviourSystem : MonoBehaviour
   private void OnRemove(DictionaryRemoveEvent<int, ProjectileConfigSchema> item)
   {
     var projectile = GameObject.Find(item.Key.ToString());
-    items.Remove(projectile);
+    _items.Remove(projectile);
   }
 
   private void OnHit((GameObject projectile, GameObject other, ProjectileConfigSchema config) data)

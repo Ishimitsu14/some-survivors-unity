@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class WeaponCollisionController : MonoBehaviour
 {
-  public Action<GameObject> OnEnemyInWeaponRange;
-  public Action<GameObject> OnEnemyOutWeaponRange;
+  private CircleCollider2D _collider;
 
   private WeaponStore _store;
-  private CircleCollider2D _collider;
+  public Action<GameObject> OnEnemyInWeaponRange;
+  public Action<GameObject> OnEnemyOutWeaponRange;
 
   private void Awake()
   {
@@ -20,19 +20,13 @@ public class WeaponCollisionController : MonoBehaviour
     _collider.radius = _store.weaponConfig.range;
   }
 
-  private void OnTriggerEnter2D(Collider2D collider)
+  private void OnTriggerEnter2D(Collider2D other)
   {
-    if (_collider != null && collider.CompareTag(GameTags.Enemy))
-    {
-      OnEnemyInWeaponRange.Invoke(collider.gameObject);
-    }
+    if (_collider != null && other.CompareTag(GameTags.Enemy)) OnEnemyInWeaponRange.Invoke(other.gameObject);
   }
 
-  private void OnTriggerExit2D(Collider2D collider)
+  private void OnTriggerExit2D(Collider2D other)
   {
-    if (collider != null && collider.CompareTag(GameTags.Enemy))
-    {
-      OnEnemyOutWeaponRange?.Invoke(collider.gameObject);
-    }
+    if (other != null && other.CompareTag(GameTags.Enemy)) OnEnemyOutWeaponRange?.Invoke(other.gameObject);
   }
 }

@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class WeaponFireController : MonoBehaviour
 {
-  private WeaponStore _store;
-  private WeaponCollisionController _collisionController;
-
   private readonly Dictionary<int, GameObject> _enemies = new();
+  private WeaponCollisionController _collisionController;
   private Coroutine _fireCoroutine;
+  private WeaponStore _store;
 
   private void Awake()
   {
@@ -23,23 +22,28 @@ public class WeaponFireController : MonoBehaviour
     _collisionController.OnEnemyOutWeaponRange += HandleEnemyOutWeaponRange;
   }
 
+  private void OnDisable()
+  {
+    _collisionController.OnEnemyInWeaponRange -= HandleEnemyInWeaponRange;
+    _collisionController.OnEnemyOutWeaponRange -= HandleEnemyOutWeaponRange;
+
+    if (_fireCoroutine == null) return;
+    StopCoroutine(_fireCoroutine);
+    _fireCoroutine = null;
+  }
+
   private void HandleEnemyInWeaponRange(GameObject enemy)
   {
-    if (_enemies.TryAdd(enemy.GetInstanceID(), enemy))
-    {
-      _fireCoroutine ??= StartCoroutine(FireCoroutine());
-    }
+    if (_enemies.TryAdd(enemy.GetInstanceID(), enemy)) _fireCoroutine ??= StartCoroutine(FireCoroutine());
   }
 
   private void HandleEnemyOutWeaponRange(GameObject enemy)
   {
     _enemies.Remove(enemy.GetInstanceID());
 
-    if (_enemies.Count == 0 && _fireCoroutine != null)
-    {
-      StopCoroutine(_fireCoroutine);
-      _fireCoroutine = null;
-    }
+    if (_enemies.Count != 0 || _fireCoroutine == null) return;
+    StopCoroutine(_fireCoroutine);
+    _fireCoroutine = null;
   }
 
   private IEnumerator FireCoroutine()
@@ -68,17 +72,5 @@ public class WeaponFireController : MonoBehaviour
     }
 
     _fireCoroutine = null;
-  }
-
-  private void OnDisable()
-  {
-    _collisionController.OnEnemyInWeaponRange -= HandleEnemyInWeaponRange;
-    _collisionController.OnEnemyOutWeaponRange -= HandleEnemyOutWeaponRange;
-
-    if (_fireCoroutine != null)
-    {
-      StopCoroutine(_fireCoroutine);
-      _fireCoroutine = null;
-    }
   }
 }

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class EnemySpawnController : MonoBehaviour
 {
-  private EnemySpawnerStore _store;
   private Camera _camera;
+  private EnemySpawnerStore _store;
 
   private void Awake()
   {
@@ -25,10 +25,7 @@ public class EnemySpawnController : MonoBehaviour
       var spawnCount = _store.spawnerConfig.objectsPerTick;
       var spawnInterval = _store.spawnerConfig.spawnRate;
 
-      for (int i = 0; i < spawnCount; i++)
-      {
-        SpawnPrefab(prefab);
-      }
+      for (var i = 0; i < spawnCount; i++) SpawnPrefab(prefab);
 
       yield return new WaitForSeconds(spawnInterval);
     }
@@ -37,10 +34,10 @@ public class EnemySpawnController : MonoBehaviour
   private void SpawnPrefab(GameObject prefab)
   {
     ActionManager.Instance.Execute(new SpawnEnemyOutOfCameraAction
-    {
-      camera = _camera,
-      prefab = prefab,
-    }
+      {
+        camera = _camera,
+        prefab = prefab
+      }
     );
   }
 }

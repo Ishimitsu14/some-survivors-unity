@@ -1,6 +1,5 @@
 using System;
 using AutoDeconstruct;
-using UnityEngine;
 
 [Serializable]
 [AutoDeconstruct]
@@ -10,19 +9,10 @@ public partial struct WeaponConfigSchema
   public float range;
   public float fireRate;
   public float punchPower;
-
   public float moveSpeed;
-
   public float destructionRadius;
-
   public float projectileLifetime;
-
-  public MonoBehaviour weaponComponent;
-  public GameObject bulletPrefab;
-
   public ProjectileKind projectileKind;
-
   public WeaponAttackType attackType;
-
   public int projectileQuantity;
 }

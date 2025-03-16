@@ -1,12 +1,11 @@
 using UnityEngine;
 
-public class EnemyDamageController : MonoBehaviour
+public class EnemyDamageReceivingController : MonoBehaviour
 {
   private EnemyStore _store;
 
   private void Awake()
   {
-    Debug.Log(gameObject.GetInstanceID());
     TryGetComponent(out _store);
   }
 
@@ -22,7 +21,6 @@ public class EnemyDamageController : MonoBehaviour
 
   private void OnProjectileHit(OnProjectileHit data)
   {
-    Debug.Log(data.damage);
     _store.currentHealth.Value -= data.damage;
   }
 }

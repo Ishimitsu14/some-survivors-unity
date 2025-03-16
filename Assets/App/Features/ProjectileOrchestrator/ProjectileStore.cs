@@ -1,9 +1,8 @@
-
 using ObservableCollections;
 
 public class ProjectileStore : Store
 {
-  public ProjectilePrefabConfigSchema prefabConfig = new();
+  public ProjectilePrefabConfigSchema prefabConfig;
 
-  public ObservableDictionary<int, ProjectileConfigSchema> projectiles = new();
+  public readonly ObservableDictionary<int, ProjectileConfigSchema> projectiles = new();
 }

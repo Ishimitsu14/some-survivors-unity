@@ -11,23 +11,21 @@ public partial struct FindFireballTargetAction
 }
 
 [ActionHandler(typeof(FindFireballTargetAction))]
-class FindFireballTargetHandler : IActionHandler<FindFireballTargetAction, GameObject>
+internal class FindFireballTargetHandler : IActionHandler<FindFireballTargetAction, GameObject>
 {
   public GameObject Execute(FindFireballTargetAction action)
   {
     var (startPoint, possibleTargets) = action;
 
-    int closestTargetId = possibleTargets.First().Key;
-    float minDistance = float.MaxValue;
+    var closestTargetId = possibleTargets.First().Key;
+    var minDistance = float.MaxValue;
 
-    foreach (var (Key, Value) in possibleTargets)
+    foreach (var (key, value) in possibleTargets)
     {
-      float distance = Vector2.Distance(startPoint, Value);
-      if (distance < minDistance)
-      {
-        minDistance = distance;
-        closestTargetId = Key;
-      }
+      var distance = Vector2.Distance(startPoint, value);
+      if (!(distance < minDistance)) continue;
+      minDistance = distance;
+      closestTargetId = key;
     }
 
     return GameObject.Find(closestTargetId.ToString());

@@ -1,11 +1,10 @@
-
 using UnityEngine;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(EnemyMovementController))]
 [RequireComponent(typeof(EnemyWithPlayerInteractController))]
 [RequireComponent(typeof(EnemyLifeController))]
-[RequireComponent(typeof(EnemyDamageController))]
+[RequireComponent(typeof(EnemyDamageReceivingController))]
 public class EnemyAuthority : MonoBehaviour
 {
   protected void Awake()
