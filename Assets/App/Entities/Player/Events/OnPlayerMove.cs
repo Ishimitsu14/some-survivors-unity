@@ -4,5 +4,5 @@ using UnityEngine;
 [AutoDeconstruct]
 public partial struct OnPlayerMove
 {
-  public Transform Transform;
+  public Vector3 position;
 }

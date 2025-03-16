@@ -21,24 +21,23 @@ public class ProjectileSpawnController : MonoBehaviour
 
   private void OnProjectileSpawn(OnProjectileSpawn data)
   {
-    var (kind, damage, moveSpeed, destructionRadius, lifeTime, startPoint, quantity, possibleTargets) =
+    var (kind, damage, moveSpeed, destructionRadius, lifeTime, startPoint, possibleTargets, weaponDirection) =
       data;
 
-    for (var i = 0; i < quantity; i++)
-      ActionManager.Instance.Execute(new SpawnProjectileAction
+    ActionManager.Instance.Execute(new SpawnProjectileAction
+    {
+      config = new ProjectileConfigSchema
       {
-        config = new ProjectileConfigSchema
-        {
-          kind = kind,
-          damage = damage,
-          moveSpeed = moveSpeed,
-          destructionRadius = destructionRadius,
-          lifeTime = lifeTime,
-          startPoint = startPoint,
-          quantity = quantity,
-          possibleTargets = possibleTargets
-        },
-        store = _store
-      });
+        kind = kind,
+        damage = damage,
+        moveSpeed = moveSpeed,
+        destructionRadius = destructionRadius,
+        lifeTime = lifeTime,
+        startPoint = startPoint,
+        possibleTargets = possibleTargets,
+        weaponDirection = weaponDirection
+      },
+      store = _store
+    });
   }
 }

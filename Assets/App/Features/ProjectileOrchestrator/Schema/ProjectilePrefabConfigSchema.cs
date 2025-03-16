@@ -7,4 +7,5 @@ using UnityEngine;
 public partial struct ProjectilePrefabConfigSchema
 {
   public GameObject Fireball;
+  public GameObject Dagger;
 }

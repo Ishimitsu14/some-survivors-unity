@@ -11,6 +11,6 @@ public partial struct OnProjectileSpawn
   public float destructionRadius;
   public float lifeTime;
   public Vector3 startPoint;
-  public int quantity;
   public Dictionary<int, Vector3> possibleTargets;
+  public Vector3 weaponDirection;
 }
