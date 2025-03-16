@@ -5,8 +5,8 @@ using UnityEngine;
 [AutoDeconstruct]
 public partial struct FollowEnemyToPlayerAction
 {
-  public Transform playerTransform;
-  public Transform enemyTransform;
+  public Vector3 playerPosition;
+  public Vector3 enemyPosition;
   public EnemyStore enemyStore;
 }
 
@@ -16,7 +16,7 @@ public class FollowEnemyToPlayerActionHandler : IActionHandler<FollowEnemyToPlay
   public void Execute(FollowEnemyToPlayerAction action)
   {
     action.enemyStore.movement.direction = math.normalize(
-        action.playerTransform.position - action.enemyTransform.position
+      action.playerPosition - action.enemyPosition
     );
   }
 }

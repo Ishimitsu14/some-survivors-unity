@@ -30,6 +30,7 @@ public class SpawnProjectileActionHandler : IActionHandler<SpawnProjectileAction
     return kind switch
     {
       ProjectileKind.Fireball => config.Fireball,
+      ProjectileKind.Dagger => config.Dagger,
       _ => throw new Exception($"Projectile Prefab for {kind} kind not defined")
     };
   }

@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6966851939688385563}
   - component: {fileID: 1264525237030442931}
   - component: {fileID: 2121418037992432928}
-  - component: {fileID: 8239308823729464551}
+  - component: {fileID: 6441713512625096161}
+  - component: {fileID: 8137031376564783902}
   m_Layer: 0
   m_Name: TestWeapon
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 5108333706137027448}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.501483, y: -0.28515995, z: -0.15116096}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -61,16 +62,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponConfig:
-    damage: 20
-    range: 5
-    fireRate: 1
+    damage: 40
+    range: 2
+    fireRate: 3
     punchPower: 0
-    moveSpeed: 0
+    projectileSpeed: 8
     destructionRadius: 0
     projectileLifetime: 0
+    projectileDelay: 0.25
     projectileKind: 0
     attackType: 0
     projectileQuantity: 1
+  direction: {x: 0, y: 0, z: 0}
 --- !u!114 &1264525237030442931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32ced0762e6c430e92a0cf6f26c6ef4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!58 &8239308823729464551
+--- !u!58 &6441713512625096161
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,4 +133,16 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 1.3
+--- !u!114 &8137031376564783902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108333706137027448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e3d12a36e94c7f927181ff775cc8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

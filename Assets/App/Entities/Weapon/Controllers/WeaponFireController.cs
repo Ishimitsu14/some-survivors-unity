@@ -50,22 +50,26 @@ public class WeaponFireController : MonoBehaviour
   {
     while (_enemies.Count > 0)
     {
-      var possibleTargets = _enemies.ToDictionary(
-        item => item.Key,
-        item => item.Value.transform.position
-      );
-
-      EventManager<OnProjectileSpawn>.Emit(new OnProjectileSpawn
+      for (var i = 0; i < _store.weaponConfig.projectileQuantity; i++)
       {
-        kind = _store.weaponConfig.projectileKind,
-        damage = _store.weaponConfig.damage,
-        moveSpeed = _store.weaponConfig.moveSpeed,
-        destructionRadius = _store.weaponConfig.destructionRadius,
-        lifeTime = _store.weaponConfig.projectileLifetime,
-        startPoint = transform.position,
-        quantity = _store.weaponConfig.projectileQuantity,
-        possibleTargets = possibleTargets
-      });
+        var possibleTargets = _enemies.ToDictionary(
+          item => item.Key,
+          item => item.Value.transform.position
+        );
+
+        EventManager<OnProjectileSpawn>.Emit(new OnProjectileSpawn
+        {
+          kind = _store.weaponConfig.projectileKind,
+          damage = _store.weaponConfig.damage,
+          moveSpeed = _store.weaponConfig.projectileSpeed,
+          destructionRadius = _store.weaponConfig.destructionRadius,
+          lifeTime = _store.weaponConfig.projectileLifetime,
+          startPoint = transform.position,
+          possibleTargets = possibleTargets,
+          weaponDirection = _store.direction
+        });
+        yield return new WaitForSeconds(_store.weaponConfig.projectileDelay);
+      }
 
       yield return new WaitForSeconds(_store.weaponConfig.fireRate);
     }

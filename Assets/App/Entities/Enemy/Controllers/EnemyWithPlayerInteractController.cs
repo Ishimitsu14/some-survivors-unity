@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class EnemyWithPlayerInteractController : MonoBehaviour
@@ -23,11 +22,11 @@ public class EnemyWithPlayerInteractController : MonoBehaviour
   private void FollowPlayer(OnPlayerMove data)
   {
     ActionManager.Instance.Execute(new FollowEnemyToPlayerAction
-    {
-      playerTransform = data.Transform,
-      enemyTransform = gameObject.transform,
-      enemyStore = _store,
-    }
+      {
+        playerPosition = data.position,
+        enemyPosition = gameObject.transform.position,
+        enemyStore = _store
+      }
     );
   }
 }

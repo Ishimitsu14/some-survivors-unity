@@ -20,9 +20,9 @@ public class MovePlayerActionHandler : IActionHandler<MovePlayerAction>
     transform.position += delta * store.movement.moveSpeed * store.movement.direction;
 
     EventManager<OnPlayerMove>.Emit(new OnPlayerMove
-    {
-      Transform = transform
-    }
+      {
+        position = transform.position
+      }
     );
   }
 }

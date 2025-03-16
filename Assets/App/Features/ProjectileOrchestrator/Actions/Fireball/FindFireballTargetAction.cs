@@ -17,7 +17,16 @@ internal class FindFireballTargetHandler : IActionHandler<FindFireballTargetActi
   {
     var (startPoint, possibleTargets) = action;
 
-    var (closestTargetId, position) = possibleTargets.ElementAt(Random.Range(0, possibleTargets.Count));
+    var closestTargetId = possibleTargets.First().Key;
+    var minDistance = float.MaxValue;
+
+    foreach (var (key, value) in possibleTargets)
+    {
+      var distance = Vector2.Distance(startPoint, value);
+      if (!(distance < minDistance)) continue;
+      minDistance = distance;
+      closestTargetId = key;
+    }
 
     return GameObject.Find(closestTargetId.ToString());
   }

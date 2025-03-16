@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7161231532688662229}
   - component: {fileID: 2831120534275079202}
   - component: {fileID: 597822952980132790}
+  - component: {fileID: 3418658664362788595}
   m_Layer: 0
   m_Name: ProjectileOrchestrator
   m_TagString: Untagged
@@ -60,6 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabConfig:
     Fireball: {fileID: 1340962176517398267, guid: f3f8cf5e8f70cd54a8cb40e0103f09e6, type: 3}
+    Dagger: {fileID: 1340962176517398267, guid: f9f6b3cac676cd9429b3f08d1ba1b6ae, type: 3}
 --- !u!114 &597822952980132790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,5 +72,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c660730969e84ee45b2380aa8427521d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3418658664362788595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7928175527384744937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da72bbc457eec64a95f39835c532de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
