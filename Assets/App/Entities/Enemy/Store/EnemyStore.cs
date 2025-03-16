@@ -14,7 +14,7 @@ public class EnemyStore : Store
     direction = Vector3.zero
   };
 
-  public ReactiveProperty<float> currentHealth;
+  public readonly ReactiveProperty<float> currentHealth;
 
   public EnemyStore()
   {
