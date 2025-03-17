@@ -1,15 +1,18 @@
 using UnityEngine;
 
-[DisallowMultipleComponent]
-[RequireComponent(typeof(EnemyMovementController))]
-[RequireComponent(typeof(EnemyWithPlayerInteractController))]
-[RequireComponent(typeof(EnemyLifeController))]
-[RequireComponent(typeof(EnemyDamageReceivingController))]
-
-public class EnemyAuthority : MonoBehaviour
+namespace Enemy
 {
-  protected void Awake()
+  [DisallowMultipleComponent]
+  [RequireComponent(typeof(EnemyMovementController))]
+  [RequireComponent(typeof(EnemyWithPlayerInteractController))]
+  [RequireComponent(typeof(EnemyLifeController))]
+  [RequireComponent(typeof(EnemyDamageReceivingController))]
+
+  public class EnemyAuthority : MonoBehaviour
   {
-    gameObject.tag = GameTags.Enemy;
+    protected void Awake()
+    {
+      gameObject.tag = GameTags.Enemy;
+    }
   }
 }
