@@ -575,7 +575,7 @@ MonoBehaviour:
   - {fileID: 3900653746358222631, guid: a4a051d6c35ca2645ba628dd943abafb, type: 3}
   - {fileID: 1572717432168647517, guid: 0fd037a488fbd1c488176bb52564d9ab, type: 3}
   - {fileID: 1076063760240145170, guid: ba88405408e2f9e479a8235fcecc40c3, type: 3}
-  locationSize: {x: 40, y: 27}
+  locationSize: {x: 40, y: 24}
   generationRadius: 1
   currentPlayerCoordinate: {x: 0, y: 0}
 --- !u!4 &1145101556

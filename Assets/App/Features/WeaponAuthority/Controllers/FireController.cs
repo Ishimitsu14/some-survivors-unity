@@ -1,25 +1,26 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ObservableCollections;
+using Projectile;
 using R3;
 using R3.Triggers;
 using UnityEngine;
+using Kind = Weapon.Kind;
 
 namespace WeaponAuthority
 {
   public class WeaponData
   {
-    public Coroutine fireCoroutine;
     public HashSet<GameObject> enemies = new();
+    public Coroutine fireCoroutine;
   }
 
   public class FireController : MonoBehaviour
   {
-    private Store _store;
+    private readonly Dictionary<Kind, WeaponData> _weaponData = new();
     private DisposableBag _disposableBag;
-    private Dictionary<Weapon.Kind, WeaponData> _weaponData = new();
+    private Store _store;
 
     private void Awake()
     {
@@ -28,7 +29,7 @@ namespace WeaponAuthority
 
     private void OnEnable()
     {
-      _disposableBag = new();
+      _disposableBag = new DisposableBag();
 
       _store.weapons
         .ObserveDictionaryAdd()
@@ -46,7 +47,7 @@ namespace WeaponAuthority
       _disposableBag.Dispose();
     }
 
-    private void OnAdd(DictionaryAddEvent<Weapon.Kind, GameObject> item)
+    private void OnAdd(DictionaryAddEvent<Kind, GameObject> item)
     {
       var (kind, weapon) = item;
 
@@ -65,7 +66,7 @@ namespace WeaponAuthority
       _weaponData.TryAdd(kind, new WeaponData());
     }
 
-    private void OnRemove(DictionaryRemoveEvent<Weapon.Kind, GameObject> item)
+    private void OnRemove(DictionaryRemoveEvent<Kind, GameObject> item)
     {
       var (kind, weapon) = item;
 
@@ -75,19 +76,16 @@ namespace WeaponAuthority
       _weaponData.Remove(kind);
     }
 
-    private void OnEnemyInWeaponRange((GameObject weapon, GameObject enemy, Weapon.Kind kind) data)
+    private void OnEnemyInWeaponRange((GameObject weapon, GameObject enemy, Kind kind) data)
     {
       var (weapon, enemy, kind) = data;
 
       if (!_weaponData.TryGetValue(kind, out var weaponData)) return;
 
-      if (weaponData.enemies.Add(enemy))
-      {
-        weaponData.fireCoroutine ??= StartCoroutine(FireCoroutine(kind));
-      }
+      if (weaponData.enemies.Add(enemy)) weaponData.fireCoroutine ??= StartCoroutine(FireCoroutine(kind));
     }
 
-    private void OnEnemyOutWeaponRange((GameObject weapon, GameObject enemy, Weapon.Kind kind) data)
+    private void OnEnemyOutWeaponRange((GameObject weapon, GameObject enemy, Kind kind) data)
     {
       var (weapon, enemy, kind) = data;
 
@@ -101,10 +99,10 @@ namespace WeaponAuthority
       weaponData.fireCoroutine = null;
     }
 
-    private IEnumerator FireCoroutine(Weapon.Kind kind)
+    private IEnumerator FireCoroutine(Kind kind)
     {
       var weaponData = _weaponData[kind];
-      var config = GetWeaponConfig(kind);
+      var config = _store.weaponConfig.Get(kind);
 
       while (weaponData.enemies.Count > 0)
       {
@@ -115,7 +113,7 @@ namespace WeaponAuthority
             item => item.transform.position
           );
 
-          EventManager<Projectile.OnSpawnRequest>.Emit(new Projectile.OnSpawnRequest
+          EventManager<OnSpawnRequest>.Emit(new OnSpawnRequest
           {
             kind = config.projectileKind,
             damage = config.damage,
@@ -133,16 +131,6 @@ namespace WeaponAuthority
       }
 
       weaponData.fireCoroutine = null;
-    }
-
-    private Weapon.ConfigScriptableObject GetWeaponConfig(Weapon.Kind kind)
-    {
-      return kind switch
-      {
-        Weapon.Kind.Firestaff => _store.weaponConfig.Firestaff,
-        Weapon.Kind.Bloodthorn => _store.weaponConfig.Bloodthorn,
-        _ => throw new Exception("Unknown weapon kind")
-      };
     }
   }
 }
