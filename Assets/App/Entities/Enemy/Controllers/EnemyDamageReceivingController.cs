@@ -11,15 +11,15 @@ public class EnemyDamageReceivingController : MonoBehaviour
 
   private void OnEnable()
   {
-    EventManager<OnProjectileHit>.WithScope(gameObject.GetInstanceID()).On += OnProjectileHit;
+    EventManager<Projectile.OnHit>.WithScope(gameObject.GetInstanceID()).On += OnProjectileHit;
   }
 
   private void OnDisable()
   {
-    EventManager<OnProjectileHit>.WithScope(gameObject.GetInstanceID()).On -= OnProjectileHit;
+    EventManager<Projectile.OnHit>.WithScope(gameObject.GetInstanceID()).On -= OnProjectileHit;
   }
 
-  private void OnProjectileHit(OnProjectileHit data)
+  private void OnProjectileHit(Projectile.OnHit data)
   {
     _store.currentHealth.Value -= data.damage;
   }

@@ -1,7 +1,7 @@
 using R3;
 using UnityEngine;
 
-public class EnemyStore : Store
+public class EnemyStore : StoreBase
 {
   public EnemyConfigSchema config = new()
   {
