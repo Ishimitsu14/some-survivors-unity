@@ -61,8 +61,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabConfig:
-    Fireball: {fileID: 1340962176517398267, guid: f3f8cf5e8f70cd54a8cb40e0103f09e6, type: 3}
-    Dagger: {fileID: 1340962176517398267, guid: f9f6b3cac676cd9429b3f08d1ba1b6ae, type: 3}
+    fireball: {fileID: 1340962176517398267, guid: f3f8cf5e8f70cd54a8cb40e0103f09e6, type: 3}
+    dagger: {fileID: 7469826620840791128, guid: e069a81a2daff6a44be3bfb3bed729fa, type: 3}
 --- !u!114 &597822952980132790
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System;
 using AutoDeconstruct;
+using UnityEngine;
 using Weapon;
 
 namespace WeaponAuthority
@@ -8,15 +9,15 @@ namespace WeaponAuthority
   [Serializable]
   public partial struct WeaponConfigSchema
   {
-    public ConfigScriptableObject Firestaff;
-    public ConfigScriptableObject Bloodthorn;
+    [SerializeField] private ConfigScriptableObject firestaff;
+    [SerializeField] private ConfigScriptableObject bloodthorn;
 
     public ConfigScriptableObject Get(Kind kind)
     {
       return kind switch
       {
-        Kind.Firestaff => Firestaff,
-        Kind.Bloodthorn => Bloodthorn,
+        Kind.Firestaff => firestaff,
+        Kind.Bloodthorn => bloodthorn,
         _ => throw new Exception($"Weapon Config for {kind} kind not defined")
       };
     }

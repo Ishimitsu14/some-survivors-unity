@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2476497246173971514}
   - component: {fileID: -7547515480710516363}
-  - component: {fileID: 6386133172823002052}
   - component: {fileID: 5212460592184799774}
   - component: {fileID: 2182700913344674335}
   - component: {fileID: 7507297815838850200}
@@ -49,18 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747718cc72524ed6b325d95b504d5b7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6386133172823002052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7348507326424303584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32ced0762e6c430e92a0cf6f26c6ef4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5212460592184799774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,8 +74,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0, z: 0}
   weaponConfig:
-    Firestaff: {fileID: 11400000, guid: 32d35b05111c9465dbec95686bb1cad3, type: 2}
-    Bloodthorn: {fileID: 11400000, guid: 4ce4d1572360a41ac90c3709d5784741, type: 2}
+    firestaff: {fileID: 11400000, guid: 32d35b05111c9465dbec95686bb1cad3, type: 2}
+    bloodthorn: {fileID: 11400000, guid: 4ce4d1572360a41ac90c3709d5784741, type: 2}
 --- !u!114 &7507297815838850200
 MonoBehaviour:
   m_ObjectHideFlags: 0

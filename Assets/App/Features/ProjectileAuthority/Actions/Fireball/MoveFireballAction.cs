@@ -22,7 +22,7 @@ namespace ProjectileAuthority
 
       Vector3 direction;
 
-      if (!config.target.IsDestroyed())
+      if (config.target && !config.target.IsDestroyed())
       {
         direction = math.normalize(config.target.transform.position - projectile.transform.position);
         config.lastDirection = direction;

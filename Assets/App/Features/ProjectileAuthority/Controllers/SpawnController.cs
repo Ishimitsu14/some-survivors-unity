@@ -1,3 +1,4 @@
+using Projectile;
 using UnityEngine;
 
 namespace ProjectileAuthority
@@ -13,17 +14,17 @@ namespace ProjectileAuthority
 
     private void OnEnable()
     {
-      EventManager<Projectile.OnSpawnRequest>.On += OnProjectileSpawn;
+      EventManager<OnSpawnRequest>.On += OnProjectileSpawn;
     }
 
     private void OnDisable()
     {
-      EventManager<Projectile.OnSpawnRequest>.On -= OnProjectileSpawn;
+      EventManager<OnSpawnRequest>.On -= OnProjectileSpawn;
     }
 
-    private void OnProjectileSpawn(Projectile.OnSpawnRequest data)
+    private void OnProjectileSpawn(OnSpawnRequest data)
     {
-      var (kind, damage, moveSpeed, destructionRadius, lifeTime, startPoint, possibleTargets, weaponDirection) =
+      var (kind, damage, moveSpeed, destructionRadius, lifeTime, startPoint, possibleTargets, weaponDirection, prefab) =
         data;
 
       var projectileConfig = new ProjectileConfigSchema
@@ -35,14 +36,15 @@ namespace ProjectileAuthority
         lifeTime = lifeTime,
         startPoint = startPoint,
         possibleTargets = possibleTargets,
-        weaponDirection = weaponDirection
+        weaponDirection = weaponDirection,
+        prefab = prefab
       };
 
       var projectile = ActionManager.Instance.Execute<SpawnAction, GameObject>(new SpawnAction
       {
         startPoint = startPoint,
         kind = kind,
-        prefabConfig = _store.prefabConfig
+        prefab = prefab
       });
 
       _store.projectiles.Add(projectile, projectileConfig);

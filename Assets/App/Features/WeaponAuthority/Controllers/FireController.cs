@@ -10,9 +10,9 @@ using Kind = Weapon.Kind;
 
 namespace WeaponAuthority
 {
-  public class WeaponData
+  public struct WeaponData
   {
-    public HashSet<GameObject> enemies = new();
+    public HashSet<GameObject> enemies;
     public Coroutine fireCoroutine;
   }
 
@@ -63,7 +63,11 @@ namespace WeaponAuthority
         .Subscribe(OnEnemyOutWeaponRange)
         .AddTo(ref _disposableBag);
 
-      _weaponData.TryAdd(kind, new WeaponData());
+      var weaponData = new WeaponData { enemies = new HashSet<GameObject>() };
+
+      if (!_weaponData.TryAdd(kind, weaponData)) return;
+
+      weaponData.fireCoroutine = StartCoroutine(FireCoroutine(kind));
     }
 
     private void OnRemove(DictionaryRemoveEvent<Kind, GameObject> item)
@@ -82,7 +86,7 @@ namespace WeaponAuthority
 
       if (!_weaponData.TryGetValue(kind, out var weaponData)) return;
 
-      if (weaponData.enemies.Add(enemy)) weaponData.fireCoroutine ??= StartCoroutine(FireCoroutine(kind));
+      weaponData.enemies.Add(enemy);
     }
 
     private void OnEnemyOutWeaponRange((GameObject weapon, GameObject enemy, Kind kind) data)
@@ -92,11 +96,6 @@ namespace WeaponAuthority
       if (!_weaponData.TryGetValue(kind, out var weaponData)) return;
 
       weaponData.enemies.Remove(enemy);
-
-      if (weaponData.enemies.Count != 0 || _weaponData[kind].fireCoroutine == null) return;
-
-      StopCoroutine(weaponData.fireCoroutine);
-      weaponData.fireCoroutine = null;
     }
 
     private IEnumerator FireCoroutine(Kind kind)
@@ -104,33 +103,38 @@ namespace WeaponAuthority
       var weaponData = _weaponData[kind];
       var config = _store.weaponConfig.Get(kind);
 
-      while (weaponData.enemies.Count > 0)
+      while (true)
       {
-        for (var i = 0; i < config.projectileQuantity; i++)
+        if (weaponData.enemies.Count > 0)
         {
-          var possibleTargets = weaponData.enemies.ToDictionary(
-            item => item.GetInstanceID(),
-            item => item.transform.position
-          );
+          var lastDirection = _store.direction;
 
-          EventManager<OnSpawnRequest>.Emit(new OnSpawnRequest
+          for (var i = 0; i < config.projectileQuantity; i++)
           {
-            kind = config.projectileKind,
-            damage = config.damage,
-            moveSpeed = config.projectileSpeed,
-            destructionRadius = config.destructionRadius,
-            lifeTime = config.projectileLifetime,
-            startPoint = transform.position,
-            possibleTargets = possibleTargets,
-            weaponDirection = _store.direction
-          });
-          yield return new WaitForSeconds(config.projectileDelay);
+            var possibleTargets = weaponData.enemies.ToDictionary(
+              item => item.GetInstanceID(),
+              item => item.transform.position
+            );
+
+            EventManager<OnSpawnRequest>.Emit(new OnSpawnRequest
+            {
+              kind = config.projectileKind,
+              damage = config.damage,
+              moveSpeed = config.projectileSpeed,
+              destructionRadius = config.destructionRadius,
+              lifeTime = config.projectileLifetime,
+              startPoint = transform.position,
+              possibleTargets = possibleTargets,
+              weaponDirection = lastDirection,
+              prefab = config.projectilePrefab
+            });
+
+            yield return new WaitForSeconds(config.projectileDelay);
+          }
         }
 
         yield return new WaitForSeconds(config.fireRate);
       }
-
-      weaponData.fireCoroutine = null;
     }
   }
 }

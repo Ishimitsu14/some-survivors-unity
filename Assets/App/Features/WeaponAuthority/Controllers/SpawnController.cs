@@ -1,4 +1,5 @@
 using UnityEngine;
+using Weapon;
 
 namespace WeaponAuthority
 {
@@ -14,30 +15,19 @@ namespace WeaponAuthority
     // TODO: Implement normal weapons spawn
     private void Start()
     {
-      SpawnFirestaff();
-      // SpawnBloodthorn();
+      Spawn(Kind.Firestaff);
+      Spawn(Kind.Bloodthorn);
     }
 
-    private void SpawnFirestaff()
+    private void Spawn(Kind kind)
     {
-      var config = _store.weaponConfig.Firestaff;
+      var config = _store.weaponConfig.Get(kind);
       var weapon = Instantiate(config.prefab, transform);
 
-      var collider = weapon.GetComponent<CircleCollider2D>();
-      collider.radius = config.range;
+      var circleCollider2D = weapon.GetComponent<CircleCollider2D>();
+      circleCollider2D.radius = config.range;
 
-      _store.weapons[Weapon.Kind.Firestaff] = weapon;
+      _store.weapons[kind] = weapon;
     }
-
-    // private void SpawnBloodthorn()
-    // {
-    //   var config = _store.weaponConfig.Bloodthorn;
-    //   var weapon = Instantiate(config.prefab, transform);
-
-    //   var collider = weapon.GetComponent<CircleCollider2D>();
-    //   collider.radius = config.range;
-
-    //   _store.weapons[Weapon.Kind.Bloodthorn] = weapon;
-    // }
   }
 }

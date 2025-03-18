@@ -10,7 +10,7 @@ namespace ProjectileAuthority
   {
     public Vector3 startPoint;
     public Kind kind;
-    public PrefabConfigSchema prefabConfig;
+    public GameObject prefab;
   }
 
   [ActionHandler(typeof(SpawnAction))]
@@ -18,8 +18,7 @@ namespace ProjectileAuthority
   {
     public GameObject Execute(SpawnAction action)
     {
-      var (startPoint, kind, prefabConfig) = action;
-      var prefab = prefabConfig.Get(kind);
+      var (startPoint, kind, prefab) = action;
 
       var projectile = Object.Instantiate(prefab, startPoint, Quaternion.identity);
 

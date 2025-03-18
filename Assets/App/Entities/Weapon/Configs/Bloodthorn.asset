@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5108333706137027448, guid: 14c17bc5323bc403abc47f7da9c954c4, type: 3}
   damage: 20
-  range: 3
+  range: 8
   fireRate: 0.75
   destructionRadius: 0
   attackType: 0
+  projectileKind: 1
+  projectilePrefab: {fileID: 7469826620840791128, guid: e069a81a2daff6a44be3bfb3bed729fa, type: 3}
   projectileSpeed: 12
   projectileDelay: 0.1
-  projectileKind: 1
   projectileQuantity: 2
+  projectileLifetime: 0

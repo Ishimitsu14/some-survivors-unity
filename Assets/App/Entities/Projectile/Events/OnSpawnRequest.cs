@@ -15,5 +15,6 @@ namespace Projectile
     public Vector3 startPoint;
     public Dictionary<int, Vector3> possibleTargets;
     public Vector3 weaponDirection;
+    public GameObject prefab;
   }
 }

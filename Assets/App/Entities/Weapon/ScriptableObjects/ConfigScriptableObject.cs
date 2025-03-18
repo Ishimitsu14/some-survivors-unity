@@ -11,9 +11,10 @@ namespace Weapon
     public float fireRate;
     public float destructionRadius;
     public AttackType attackType;
+    public Projectile.Kind projectileKind;
+    public GameObject projectilePrefab;
     public float projectileSpeed;
     public float projectileDelay;
-    public Projectile.Kind projectileKind;
     public int projectileQuantity;
     public float projectileLifetime;
   }

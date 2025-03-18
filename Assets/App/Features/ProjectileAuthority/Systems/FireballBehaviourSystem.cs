@@ -1,11 +1,12 @@
 using System.Linq;
+using Projectile;
 using UnityEngine;
 
 namespace ProjectileAuthority
 {
   public class FireballBehaviourSystem : BehaviorSystemBase<FireballConfigSchema>
   {
-    protected override Projectile.Kind Kind { get; } = Projectile.Kind.Fireball;
+    protected override Kind Kind { get; } = Kind.Fireball;
 
     private void Update()
     {
@@ -19,20 +20,31 @@ namespace ProjectileAuthority
 
     protected override FireballConfigSchema PrepareConfig(GameObject projectile, ProjectileConfigSchema config)
     {
-      var target = ActionManager.Instance.Execute<FindFireballTargetAction, GameObject>(new FindFireballTargetAction
-      {
-        startPoint = config.startPoint,
-        possibleTargets = config.possibleTargets
-      });
-
-      return new FireballConfigSchema
+      var fireballConfig = new FireballConfigSchema
       {
         damage = config.damage,
         moveSpeed = config.moveSpeed,
         destructionRadius = config.destructionRadius,
-        lifeTime = config.lifeTime,
-        target = target
+        lifeTime = config.lifeTime
       };
+
+      try
+      {
+        var target = ActionManager.Instance.Execute<FindFireballTargetAction, GameObject>(new FindFireballTargetAction
+        {
+          startPoint = config.startPoint,
+          possibleTargets = config.possibleTargets
+        });
+
+        fireballConfig.target = target;
+
+        return fireballConfig;
+      }
+      catch
+      {
+        fireballConfig.lastDirection = config.weaponDirection;
+        return fireballConfig;
+      }
     }
   }
 }

@@ -480,7 +480,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8629021078531280272, guid: af1c908c1555eec49a403b4656b78eae, type: 3}
+      propertyPath: weaponConfig.firestaff
+      value: 
+      objectReference: {fileID: 11400000, guid: 32d35b05111c9465dbec95686bb1cad3, type: 2}
+    - target: {fileID: 8629021078531280272, guid: af1c908c1555eec49a403b4656b78eae, type: 3}
+      propertyPath: weaponConfig.bloodthorn
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ce4d1572360a41ac90c3709d5784741, type: 2}
+    m_RemovedComponents:
+    - {fileID: 3542899488410008651, guid: af1c908c1555eec49a403b4656b78eae, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
